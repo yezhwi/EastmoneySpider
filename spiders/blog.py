@@ -11,6 +11,8 @@ class BlogSpider(scrapy.Spider):
     def parse(self, response):
         for sel in response.xpath('//div[@class="post-preview"]'):
             item = DemoItem()
-            item['title'] = sel.xpath('.//h2/text()').extract()
-            item['link'] = sel.xpath('.//a/@href').extract()
+            # return list
+            # item['title'] = sel.xpath('.//h2/text()').extract()
+            item['title'] = sel.xpath('.//h2/text()').extract_first("").strip()
+            item['link'] = response.url + sel.xpath('.//a/@href').extract_first("")
             yield item
