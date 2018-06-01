@@ -34,3 +34,12 @@ class JobboleItem(scrapy.Item):
     comment_nums = scrapy.Field()
     tag = scrapy.Field()
     content = scrapy.Field()
+
+
+class RMBExchangeRateItem(scrapy.Item):
+    # 货币对 例：美元/人民币
+    currency_pair = scrapy.Field()
+    # 货币对代码 例：USD/CNY
+    currency_pair_code = scrapy.Field()
+    # 汇率 取中间价
+    ex_rate = scrapy.Field()

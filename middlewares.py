@@ -6,6 +6,9 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from scrapy.http import HtmlResponse
+from selenium import webdriver
+import time
 
 
 class EastmoneyspiderSpiderMiddleware(object):
@@ -78,7 +81,21 @@ class EastmoneyspiderDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        return None
+        print "spider.name --> " + spider.name
+        if spider.name == "rmb_parity_cn":
+            # print "---------------------"
+            # 指定使用的浏览器
+            driver = webdriver.PhantomJS()
+            driver.get(request.url)
+            # time.sleep(1)
+            # 可执行js，模仿用户操作。此处为将页面拉至最底端
+            # js = "var q=document.documentElement.scrollTop=10000"
+            # driver.execute_script(js)
+            time.sleep(3)
+            body = driver.page_source
+            return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
+        else:
+            return None
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
