@@ -91,8 +91,11 @@ class EastmoneyspiderDownloaderMiddleware(object):
             # 可执行js，模仿用户操作。此处为将页面拉至最底端
             # js = "var q=document.documentElement.scrollTop=10000"
             # driver.execute_script(js)
+            # 等待js执行完成
             time.sleep(3)
             body = driver.page_source
+            # driver.page_source.encode('utf-8')
+            driver.quit()
             return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
         else:
             return None
