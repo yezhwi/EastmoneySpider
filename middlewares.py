@@ -95,7 +95,6 @@ class EastmoneyspiderDownloaderMiddleware(object):
             time.sleep(3)
             body = driver.page_source
             # driver.page_source.encode('utf-8')
-            driver.quit()
             return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
         else:
             return None
